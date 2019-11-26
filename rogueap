@@ -15,10 +15,15 @@ verify_args(){
   for i in $1 $2; do
     ifconfig | grep $i >/dev/null 2>&1
     if [ $? -ne 0 ];then
-      echo "The adapter '$1' is not connected."
+      echo "The adapter '$i' is not connected."
       exit
     fi
   done
+
+  if [ "$1" = "$2" ];then
+    echo "The adapters selected cannot be the same."
+    exit
+  fi
 }
 
 verify_apps(){
