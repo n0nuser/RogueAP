@@ -4,20 +4,16 @@
 
 This script uses _hostapd_, _dnsmasq_, _macchanger_, _sslstrip_ as main programs, and _systemctl_, _iptables_.
 
-I explained every line of the script so anyone is able to understand how a Rogue AP works (it costed me around a week to make things work).
+I explained every line of the script in [My Page](https://nonuser.es/guides/24-11-19-rogueap/) so anyone is able to understand how a Rogue AP works.
 
-Also I don't take any responsability of any possible harms done with this script.
+Also I don't take any responsability of any possible harms done with this script. I strongly advise to use it for educational purposes.
 
 
 ## CONCEPT
 
 A Rogue AP is a wireless hotspot that let's people connect, but it also performs Man In The Middle attacks.
 
-This way you can sniff every packet ongoing between the user connected to your AP and the router.
-
-This means you can see all the information people (connected to your AP) is sending.
-
-The idea of the MAC change is to make it a little more evasive and remain unknown. :neckbeard:
+This way you can monitorize all the traffic ongoing between the user connected to your AP and the router.
 
 ## INSTALL :arrow_down:
 
@@ -44,7 +40,11 @@ __Arguments explained:__
 
 It's recommended to select as the second adapter the one with more power and the antenna with more dbi's.
 
+Also you can't run the script with the same adapter. You have to select different adapters.
+
 ## NOTES 📃
+
+The idea of the MAC change is to make it a little bit more evasive and remain unknown. :neckbeard:
 
 When the program finishes it does a clean up and restores original MAC's.
 
