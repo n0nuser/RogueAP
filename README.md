@@ -4,7 +4,7 @@
 
 This script uses _hostapd_, _dnsmasq_, _macchanger_, _sslstrip_ as main programs, and _systemctl_, _iptables_.
 
-I explained every line of the script in [My Page](https://nonuser.es/guides/24-11-19-rogueap/) so anyone is able to understand how a Rogue AP works.
+I explained every line of the script in [My Page](https://nonuser.es/posts/rogueap/) so anyone is able to understand how a Rogue AP works.
 
 Also I don't take any responsability of any possible harms done with this script. I strongly advise to use it for educational purposes.
 
