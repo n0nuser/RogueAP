@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ##################################
-## MADE BY N0NUSER (nonuser.es) ##
+## MADE BY N0NUSER (pablogonzalez.me) ##
 ##################################
 
-# Explanation of code on https://nonuser.es
+# Explanation of code on https://pablogonzalez.me
 
 verify_args(){
   if [ $# -ne 3 ];then
